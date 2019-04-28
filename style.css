@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.g-doc-annotation_index {
+  display: none;
+}
+
 span.g-redacted {
   position: relative;
   overflow-x: hidden;
