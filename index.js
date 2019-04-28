@@ -2,20 +2,12 @@ import cheerio from 'cheerio';
 import fs from 'fs';
 import Epub from 'epub-gen';
 
+import sections from './sections.json';
+
 const inputHtml = fs.readFileSync('./input/input.html');
 const $ = cheerio.load(inputHtml);
 
 const allPages = $('.g-doc-page').toArray();
-
-const sections = [
-  { name: "Volume I Cover", firstPage: 1, lastPage: 1 },
-  { name: "Volume I Introduction", firstPage: 9, lastPage: 11 },
-  { name: "Volume I Summary", firstPage: 12, lastPage: 18 },
-  { name: "Volume I", firstPage: 19, lastPage: 207 },
-  { name: "Volume II Cover", firstPage: 208, lastPage: 208 },
-  { name: "Volume II Introduction", firstPage: 213, lastPage: 214 },
-  { name: "Volume II Summary", firstPage: 215, lastPage: 220 }
-]
 
 function manipulateArray(array, func) {
   const result = [];
@@ -45,6 +37,7 @@ function fixMidParagraphPageBreaks(current, prev) {
 const content = sections.map(
   section => {
     const html = $('<div></div>');
+    html.addClass(section.className);
     const pages = allPages.slice(section.firstPage - 1, section.lastPage);
 
     manipulateArray(pages, fixMidParagraphPageBreaks);
@@ -53,16 +46,21 @@ const content = sections.map(
       html.append($(page).find('.g-doc-html > *'));
     }
 
+    const data = $('<div></div>');
+    data.append(html);
+
     return {
       title: section.name,
-      data: html.html()
+      data: data.html()
     };
   }
 )
 
 const options = {
   title: 'Mueller Report',
-  content: content
+  content: content,
+  css: fs.readFileSync('./style.css'),
+  appendChapterTitles: false
 };
 
 new Epub(options, './output/output.epub');
