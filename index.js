@@ -1,18 +1,20 @@
+import cheerio from 'cheerio';
+import fs from 'fs';
 import Epub from 'epub-gen';
 
+const content = fs.readFileSync('./input/input.html');
+const $ = cheerio.load(content);
+
+const allPages = $('.g-doc-page');
+const output = $('<div></div>');
+output.append(allPages.find('p'));
+
 const options = {
-  title: 'Test book',
-  author: 'Somebody',
+  title: 'Mueller Report',
   content: [
     {
-      title: 'A chapter',
-      data: `
-        <h2>Welcome to the chapter</h2>
-        <p>
-          The chapter <sup><a href="#n1" epub:type="noteref">1</a></sup> is about stuff.
-        </p>
-        <aside id="n1" epub:type="footnote">Chapters are usually about stuff.</aside>
-        `
+      title: 'ALL OF IT',
+      data: output.html()
     }
   ]
 };
