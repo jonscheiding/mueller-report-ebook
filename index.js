@@ -2,7 +2,7 @@ import cheerio from 'cheerio';
 import fs from 'fs';
 import Epub from 'epub-gen';
 
-import sections from './sections.json';
+import metadata from './metadata.json';
 import FootnoteProcessor from './src/FootnoteProcessor.js';
 import ParagraphProcessor from './src/ParagraphProcessor.js';
 
@@ -11,7 +11,7 @@ const $ = cheerio.load(inputHtml);
 
 const allPages = $('.g-doc-page').toArray();
 
-const content = sections.map(
+const content = metadata.sections.map(
   section => {
     const html = $('<div></div>').addClass(section.className);
     const pages = allPages.slice(section.firstPage - 1, section.lastPage);
@@ -35,11 +35,11 @@ const content = sections.map(
 )
 
 const options = {
-  title: 'Report On The Investigation Into Russian Interference In The 2016 Presidential Election',
-  author: 'Robert Mueller',
-  publisher: 'U.S. Department of Justice',
+  title: metadata.title,
+  author: metadata.author,
+  publisher: metadata.publisher,
   content: content,
-  cover: './cover.png',
+  cover: metadata.cover,
   css: fs.readFileSync('./style.css'),
   appendChapterTitles: false
 };
