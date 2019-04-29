@@ -4,6 +4,7 @@ import Epub from 'epub-gen';
 import shortid from 'shortid';
 
 import sections from './sections.json';
+import FootnoteProcessor from './src/FootnoteProcessor.js';
 
 const inputHtml = fs.readFileSync('./input/input.html');
 const $ = cheerio.load(inputHtml);
@@ -35,63 +36,18 @@ function fixMidParagraphPageBreaks(current, index, prev) {
   $(firstElementOnPage).remove();
 }
 
-function extractFootnotes(footnotesMap) {
-  return (current, index) => {
-    const footnoteReferences = $(current).find(':not(.g-footnote) sup:not(.g-doc-annotation_index)').toArray();
-    const footnotes = $(current).find('.g-footnote').toArray();
-
-    const footnotesFoundOnThisPage = [];
-
-    for(const footnote of footnotes) {
-      const sup = $(footnote).find('sup').first();
-      footnotesMap[sup.text()] = {
-        number: sup.text(),
-        id: shortid.generate(),
-        content: footnote
-      };
-
-      footnotesFoundOnThisPage.push(sup.text());
-
-      sup.remove();
-    }
-
-    for(const footnoteReference of footnoteReferences) {
-      const number = $(footnoteReference).text();
-      const footnote = footnotesMap[number];
-
-      if(!footnote) {
-        console.warn(`Couldn't find content for footnote ${number} in ${footnotesFoundOnThisPage} on page ${index}.`);
-        continue;
-      }
-
-      $(footnoteReference).replaceWith($(`
-        <a href='#${footnote.id}' epub:type="noteref"><sup>${number}</sup></a>
-      `));
-    }
-  }
-}
-
 const content = sections.map(
   section => {
-    const footnotesMap = {};
+    const footnoteProcessor = new FootnoteProcessor();
 
     const html = $('<div></div>').addClass(section.className);
     const pages = allPages.slice(section.firstPage - 1, section.lastPage);
 
-    manipulateArray(pages, extractFootnotes(footnotesMap));
+    manipulateArray(pages, footnoteProcessor.processPage);
     manipulateArray(pages, fixMidParagraphPageBreaks);
 
     for(const page of pages) {
       html.append($(page).find('.g-doc-html > *'));
-    }
-
-    for(const footnote of Object.values(footnotesMap)) {
-      const footnoteElement = $('<aside></aside>');
-      footnoteElement.append($(footnote.content));
-      footnoteElement.attr('id', footnote.id);
-      footnoteElement.attr('epub:type', 'footnote');
-
-      html.append(footnoteElement);
     }
 
     const data = $('<div></div>');
