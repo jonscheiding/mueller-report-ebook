@@ -5,5 +5,6 @@
   { "name": "Volume I", "firstPage": 19, "lastPage": 207 },
   { "name": "Volume II Cover", "firstPage": 208, "lastPage": 208, "className": "cover" },
   { "name": "Volume II Introduction", "firstPage": 213, "lastPage": 214 },
-  { "name": "Volume II Summary", "firstPage": 215, "lastPage": 220 }
+  { "name": "Volume II Summary", "firstPage": 215, "lastPage": 220 },
+  { "name": "Volume II Summary", "firstPage": 221, "lastPage": 448 }
 ]
