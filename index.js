@@ -39,6 +39,7 @@ const options = {
   author: 'Robert Mueller',
   publisher: 'U.S. Department of Justice',
   content: content,
+  cover: './cover.png',
   css: fs.readFileSync('./style.css'),
   appendChapterTitles: false
 };
