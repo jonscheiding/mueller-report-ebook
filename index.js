@@ -61,7 +61,9 @@ const content = sections.map(
 )
 
 const options = {
-  title: 'Mueller Report',
+  title: 'Report On The Investigation Into Russian Interference In The 2016 Presidential Election',
+  author: 'Robert Mueller',
+  publisher: 'U.S. Department of Justice',
   content: content,
   css: fs.readFileSync('./style.css'),
   appendChapterTitles: false
