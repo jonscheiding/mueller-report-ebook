@@ -4,8 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "yarn run start:generate && open ./output/output.epub && unzip -d output -o output/output.epub",
-    "start:generate": "babel-node index.js"
+    "start": "nodemon --exec yarn run serve",
+    "dev:generate": "babel-node index.js",
+    "dev:unzip": "unzip -o -d output output/output.epub",
+    "dev:serve": "serve -s output/OEBPS/",
+    "dev:open": "open output/output.epub",
+    "serve": "yarn run dev:generate && yarn run dev:unzip && yarn run dev:serve",
+    "open": "yarn run dev:generate && open output/output.epub"
   },
   "dependencies": {
     "@babel/core": "^7.4.4",
