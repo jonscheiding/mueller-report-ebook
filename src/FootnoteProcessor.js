@@ -6,6 +6,12 @@ export default class FootnoteProcessor {
     this.footnotesMap = {};
   }
 
+  processPages = (pages) => {
+    for(const page of pages) {
+      this.processPage(page);
+    }
+  }
+
   processPage = (page) => {
     page = $(page);
 
