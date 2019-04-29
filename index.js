@@ -44,4 +44,4 @@ const options = {
   appendChapterTitles: false
 };
 
-new Epub(options, './output/output.epub');
+new Epub(options, './build/output.epub');

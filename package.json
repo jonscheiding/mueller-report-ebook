@@ -5,12 +5,11 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon --exec yarn run serve",
-    "dev:generate": "babel-node index.js",
-    "dev:unzip": "unzip -o -d output output/output.epub",
-    "dev:serve": "serve -s output/OEBPS/",
-    "dev:open": "open output/output.epub",
-    "serve": "yarn run dev:generate && yarn run dev:unzip && yarn run dev:serve",
-    "open": "yarn run dev:generate && open output/output.epub"
+    "build": "yarn run build:epub",
+    "build:epub": "babel-node index.js",
+    "build:unzip": "unzip -o -d build/output/ build/output.epub",
+    "serve": "yarn run build:epub && yarn run build:unzip && serve -s build/output/OEBPS/",
+    "open": "yarn run build:epub && open build/output.epub"
   },
   "dependencies": {
     "@babel/core": "^7.4.4",
@@ -19,9 +18,10 @@
     "@babel/preset-env": "^7.4.4",
     "cheerio": "^1.0.0-rc.3",
     "epub-gen": "^0.1.0",
-    "nodemon": "^1.18.11",
-    "npm-run-all": "^4.1.5",
-    "serve": "^11.0.0",
     "shortid": "^2.2.14"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11",
+    "serve": "^11.0.0"
   }
 }
