@@ -55,6 +55,7 @@ const content = sections.map(
 
     return {
       title: section.name,
+      excludeFromToc: section.excludeFromToc,
       data: data.html()
     };
   }

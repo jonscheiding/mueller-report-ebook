@@ -1,10 +1,10 @@
 [
-  { "name": "Volume I Cover", "firstPage": 1, "lastPage": 1, "className": "cover" },
+  { "name": "Volume I Cover", "firstPage": 1, "lastPage": 1, "className": "cover", "excludeFromToc": "true" },
   { "name": "Volume I Introduction", "firstPage": 9, "lastPage": 11 },
   { "name": "Volume I Summary", "firstPage": 12, "lastPage": 18 },
   { "name": "Volume I", "firstPage": 19, "lastPage": 207 },
-  { "name": "Volume II Cover", "firstPage": 208, "lastPage": 208, "className": "cover" },
+  { "name": "Volume II Cover", "firstPage": 208, "lastPage": 208, "className": "cover", "excludeFromToc": "true" },
   { "name": "Volume II Introduction", "firstPage": 213, "lastPage": 214 },
   { "name": "Volume II Summary", "firstPage": 215, "lastPage": 220 },
-  { "name": "Volume II Summary", "firstPage": 221, "lastPage": 448 }
+  { "name": "Volume II", "firstPage": 221, "lastPage": 448 }
 ]
