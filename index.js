@@ -13,17 +13,17 @@ const allPages = $('.g-doc-page').toArray();
 function manipulateArray(array, func) {
   const result = [];
   for(let i = 0; i < array.length; i++) {
-    const manipulated = func(array[i], array[i - 1], array[i + 1]);
+    const manipulated = func(array[i], i, array[i - 1], array[i + 1]);
     result.push(manipulated || array[i]);
   }
   return result;
 }
 
-function fixMidParagraphPageBreaks(current, prev) {
+function fixMidParagraphPageBreaks(current, index, prev) {
   if(!prev) return;
 
   const firstElementOnPage = $(current).find('.g-doc-html > *')[0];
-  if(firstElementOnPage.name !== 'p') return;
+  if(!firstElementOnPage || firstElementOnPage.name !== 'p') return;
   const text = firstElementOnPage.children[0].data;
   if(!text) return;
   if(text[0] === text[0].toUpperCase()) return;
@@ -36,17 +36,22 @@ function fixMidParagraphPageBreaks(current, prev) {
 }
 
 function extractFootnotes(footnotesMap) {
-  return (current) => {
+  return (current, index) => {
     const footnoteReferences = $(current).find(':not(.g-footnote) sup:not(.g-doc-annotation_index)').toArray();
     const footnotes = $(current).find('.g-footnote').toArray();
 
+    const footnotesFoundOnThisPage = [];
+
     for(const footnote of footnotes) {
-      const sup = $(footnote).find('sup');
+      const sup = $(footnote).find('sup').first();
       footnotesMap[sup.text()] = {
         number: sup.text(),
         id: shortid.generate(),
         content: footnote
       };
+
+      footnotesFoundOnThisPage.push(sup.text());
+
       sup.remove();
     }
 
@@ -55,7 +60,8 @@ function extractFootnotes(footnotesMap) {
       const footnote = footnotesMap[number];
 
       if(!footnote) {
-        console.warn(`Couldn't find content for footnote ${number} in ${Object.keys(footnotesMap)}.`);
+        console.warn(`Couldn't find content for footnote ${number} in ${footnotesFoundOnThisPage} on page ${index}.`);
+        continue;
       }
 
       $(footnoteReference).replaceWith($(`
