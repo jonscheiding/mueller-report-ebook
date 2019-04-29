@@ -47,6 +47,7 @@ function extractFootnotes(footnotesMap) {
         id: shortid.generate(),
         content: footnote
       };
+      sup.remove();
     }
 
     for(const footnoteReference of footnoteReferences) {
@@ -57,8 +58,8 @@ function extractFootnotes(footnotesMap) {
         console.warn(`Couldn't find content for footnote ${number} in ${Object.keys(footnotesMap)}.`);
       }
 
-      $(footnoteReference).append($(`
-        <a href='#${footnote.id}' epub:type="noteref">${number}</a>
+      $(footnoteReference).replaceWith($(`
+        <a href='#${footnote.id}' epub:type="noteref"><sup>${number}</sup></a>
       `));
     }
   }
@@ -79,16 +80,11 @@ const content = sections.map(
     }
 
     for(const footnote of Object.values(footnotesMap)) {
-      const footnoteElement = $(footnote.content).wrap('<aside></aside>');
+      const footnoteElement = $('<aside></aside>');
+      footnoteElement.append($(footnote.content));
       footnoteElement.attr('id', footnote.id);
       footnoteElement.attr('epub:type', 'footnote');
 
-      try {
-        footnoteElement.append($(footnote.content).html());
-      } catch(e) {
-        console.error(e);
-        console.warn($(footnote.content));
-      }
       html.append(footnoteElement);
     }
 
