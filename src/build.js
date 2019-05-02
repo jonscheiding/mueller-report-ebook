@@ -9,15 +9,21 @@ const programArgs = yargs
   .option('source', { type: 'string', demandOption: true })
   .argv
 
-const pages = JSON.parse(fs.readFileSync(programArgs.source))
-const content = pages.map(p => p.markup).join()
+const allPages = JSON.parse(fs.readFileSync(programArgs.source))
+
+const content = config.volumes.map(
+  v => {
+    const volumePages = allPages.slice(v.startPage - 1, v.endPage - 1)
+    return {
+      title: v.title,
+      data: volumePages.map(p => p.markup).join('')
+    }
+  }
+)
 
 const epubConfig = {
   ...config.metadata,
-  content: [{
-    title: 'Full report',
-    data: content
-  }]
+  content: content
 }
 
 // eslint-disable-next-line no-new
