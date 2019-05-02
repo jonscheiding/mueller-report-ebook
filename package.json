@@ -6,12 +6,15 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint src/",
-    "prepare": "wget -O build/pages.json 'https://static01.nyt.com/newsgraphics/2019/03/25/mueller-report-full/b0292ffe2aa124f590e2fba67ed4948e50d74f27/pages.json'"
+    "prepare": "wget -O build/pages.json 'https://static01.nyt.com/newsgraphics/2019/03/25/mueller-report-full/b0292ffe2aa124f590e2fba67ed4948e50d74f27/pages.json'",
+    "build": "babel-node src/build.js --source build/pages.json --output build/mueller-ebook.epub"
   },
   "dependencies": {
     "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.4.4"
+    "@babel/preset-env": "^7.4.4",
+    "epub-gen": "^0.1.0",
+    "yargs": "^13.2.2"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
