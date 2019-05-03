@@ -41,8 +41,9 @@ const epubConfig = {
     excludeFromToc: true,
     volumes: config.volumes
   }],
-  appendChapterTitles: false,
   css: fs.readFileSync('./style.css'),
+  cover: './cover.png',
+  appendChapterTitles: false,
   customHtmlTocTemplatePath: './templates/Toc.xhtml.ejs',
   customNcxTocTemplatePath: './templates/Toc.ncx.ejs'
 }
