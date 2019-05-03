@@ -2,6 +2,7 @@ import $ from 'cheerio'
 import shortid from 'shortid'
 
 import { Processor } from './Processor'
+import { of } from 'rxjs'
 
 export class FootnoteProcessor extends Processor {
   constructor () {
@@ -32,7 +33,7 @@ export class FootnoteProcessor extends Processor {
       const number = $(footnoteReferenceElement).text()
 
       if (!this.allFootnotes[number]) {
-        console.warn(`Could not find content for footnote ${number}`)
+        console.warn(`Could not find content for footnote ${number}.`)
         continue
       }
 
@@ -49,22 +50,32 @@ export class FootnoteProcessor extends Processor {
 
   _extractFootnotesFromContent (content) {
     const footnoteElements = content.find('.g-footnote').toArray()
-    const footnotes = {}
 
     for (const footnoteElement of footnoteElements) {
       const footnote = this._processFootnoteElement(footnoteElement)
-      footnotes[footnote.number] = footnote
+
+      if (!footnote) {
+        continue
+      }
+
+      if (footnote.number in this.allFootnotes) {
+        console.warn(`Duplicate footnote number ${footnote.number}.`)
+        continue
+      }
+
+      this.allFootnotes[footnote.number] = footnote
     }
-
-    this.allFootnotes = { ...this.allFootnotes, ...footnotes }
-
-    return footnotes
   }
 
   _processFootnoteElement (footnoteElement) {
     const id = shortid()
     const footnoteNumber = $(footnoteElement).find('sup').first()
     const number = footnoteNumber.text()
+
+    if (!number) {
+      this._attachFootnoteElementToPreviousFootnote(footnoteElement)
+      return null
+    }
 
     const footnoteBackLink = $('<a />')
       .attr('href', `#${id}-source`)
@@ -80,5 +91,13 @@ export class FootnoteProcessor extends Processor {
     $(footnoteElement).remove()
 
     return { id, number, element }
+  }
+
+  _attachFootnoteElementToPreviousFootnote (footnoteElement) {
+    const lastFootnoteNumber = Object.keys(this.allFootnotes).slice(-1)[0]
+    this.allFootnotes[lastFootnoteNumber].element.append(
+      ' ', $(footnoteElement).contents())
+
+    $(footnoteElement).remove()
   }
 }
