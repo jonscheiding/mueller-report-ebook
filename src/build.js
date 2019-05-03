@@ -1,8 +1,10 @@
+import fs from 'fs'
 import yargs from 'yargs'
 import EPub from 'epub-gen'
-import fs from 'fs'
+import $ from 'cheerio'
 
 import config from '../config.json'
+import { FootnoteProcessor } from './FootnoteProcessor.js'
 
 const programArgs = yargs
   .option('output', { type: 'string', demandOption: true })
@@ -13,10 +15,16 @@ const allPages = JSON.parse(fs.readFileSync(programArgs.source))
 
 const content = config.volumes.map(
   v => {
-    const volumePages = allPages.slice(v.startPage - 1, v.endPage - 1)
+    const footnoteProcessor = new FootnoteProcessor()
+    let volumeContent = allPages
+      .slice(v.startPage - 1, v.endPage - 1)
+      .map(page => $('<div></div>').append(page.markup))
+
+    volumeContent = footnoteProcessor.processItems(volumeContent)
+
     return {
       title: v.title,
-      data: volumePages.map(p => p.markup).join('')
+      data: volumeContent.map(c => $.html(c)).join('')
     }
   }
 )
