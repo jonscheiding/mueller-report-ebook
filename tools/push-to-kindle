@@ -7,7 +7,11 @@ if [ ! -d "/Volumes/${KINDLE_NAME}" ]; then
   if [ -z "$(diskutil list | grep ${KINDLE_NAME})" ]; then
     echo "${KINDLE_NAME} is ejected; attempting to re-enumerate"
     /Applications/Utilities/USB\ Prober.app/Contents/Resources/reenumerate -v $KINDLE_IDENTIFIER
-    sleep 5
+    
+    while [ ! -d "/Volumes/${KINDLE_NAME}" ]; do
+      sleep 1
+    done
+
   else
     echo "${KINDLE_NAME} is attached, but not mounted; attempting to mount"
     diskutil mountDisk ${KINDLE_NAME}

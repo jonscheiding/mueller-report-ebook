@@ -17,7 +17,7 @@
     "start:server": "serve -s build/mueller-ebook/OEBPS",
     "start:watch": "nodemon --ignore build/ -e js,ejs,css,json --exec yarn run start:html",
     "start:html": "run-s build:epub build:unzip",
-    "push": "tools/push-to-kindle build/mueller-ebook.mobi"
+    "push": "yarn build && tools/push-to-kindle build/mueller-ebook.mobi"
   },
   "dependencies": {
     "@babel/core": "^7.4.4",
