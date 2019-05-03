@@ -6,14 +6,17 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint src/",
-    "prepare": "wget -O build/pages.json 'https://static01.nyt.com/newsgraphics/2019/03/25/mueller-report-full/b0292ffe2aa124f590e2fba67ed4948e50d74f27/pages.json'",
+    "prepare:download": "wget -O build/pages.original.json 'https://static01.nyt.com/newsgraphics/2019/03/25/mueller-report-full/b0292ffe2aa124f590e2fba67ed4948e50d74f27/pages.json'",
+    "prepare:patch": "patch build/pages.original.json -i corrections.patch -o build/pages.json",
+    "prepare": "run-s prepare:download prepare:patch",
     "build": "run-s build:epub build:mobi",
     "build:epub": "babel-node src/build.js --source build/pages.json --output build/mueller-ebook.epub",
     "build:mobi": "tools/kindlegen build/mueller-ebook.epub",
+    "build:unzip": "rimraf build/mueller-ebook && unzip -o -d build/mueller-ebook build/mueller-ebook.epub",
     "start": "run-p start:watch start:server",
     "start:server": "serve -s build/mueller-ebook/OEBPS",
     "start:watch": "nodemon --exec yarn run start:html",
-    "start:html": "yarn run build:epub && rimraf build/mueller-ebook && unzip -o -d build/mueller-ebook build/mueller-ebook.epub",
+    "start:html": "run-s build:epub build:unzip",
     "push": "tools/push-to-kindle build/mueller-ebook.mobi"
   },
   "dependencies": {
