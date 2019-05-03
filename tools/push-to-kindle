@@ -1,0 +1,20 @@
+#!/bin/bash
+
+KINDLE_NAME=${KINDLE_NAME:=Kindle}
+KINDLE_IDENTIFIER=${KINDLE_IDENTIFIER:=0x1949,0x0004}
+
+if [ ! -d "/Volumes/${KINDLE_NAME}" ]; then 
+  if [ -z "$(diskutil list | grep ${KINDLE_NAME})" ]; then
+    echo "${KINDLE_NAME} is ejected; attempting to re-enumerate"
+    /Applications/Utilities/USB\ Prober.app/Contents/Resources/reenumerate -v $KINDLE_IDENTIFIER
+    sleep 5
+  else
+    echo "${KINDLE_NAME} is attached, but not mounted; attempting to mount"
+    diskutil mountDisk ${KINDLE_NAME}
+  fi
+fi
+
+echo "Copying updated content to Kindle"
+cp $1 /Volumes/Kindle/documents
+
+diskutil eject ${KINDLE_NAME}
