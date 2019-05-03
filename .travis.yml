@@ -1,6 +1,16 @@
 language: node_js
 node_js:
-  - "10"
+- '10'
 script:
-  - yarn lint
-  - yarn build
+- yarn lint
+- yarn build
+- find build
+deploy:
+  provider: releases
+  api_key:
+    secure: mb2LuKz26SWHp6Nwz828LO6kfi6mROUIg+3E4ZueerLmQ3QTNKV6w+TPiHbh1bnR4+R5WpZRsQBUlXikZUocW/7Li8q9++dlHHnGzIpH8VwyV5WvIbNiyqwqO3zsiYmloWeTqSny7UMWeho/2tN0rkh5Kst1tZukAHCE8W6nxlGqdRtPzNCWuRit+TW9q1rugyHVPjuSioTLBnYL7pMO5gXPa7R3o765RoyIABsG2L7skAN8NWAhzSYE12UB2Na/PQeLJzh4MfAJ4kPvbY6xJty3OUe6000PrNb8Au5tG8J6GXEQoEhp0MlzgRRCQKMu4wd025vvJGBV6zhDtp4appPv6jwMlkvwAIl69VzgDQQpFohlno6s9aBArfht/OFwi82G2EZB2xdoofErXb/IRIh3fAvNNhrxqUVKuW9bRKUNHVNMeTuM1Vijxa77Jv8pkYyLS7c+qmOnb4l5bWX1rTpKTx9giupU6PjIzayrtK7rGU2xtaSLbvgMwKAg42ZZAcqtcdHAT6sh0f3GhcDyesWJlm+2+hLbKRPwkgnDEB4oBpDehQrzTJvZhcadmZ97by9WxLDISJYsyP6DLj/2DOv2bsD+m60Mmhofp0dLjRYLbSIhS3Mfbh2IR8JeeWBMUCftnKYCssrXksb0wdR7rmGWUwvZMYi85lqnP/LDE4s=
+  file_glob: true
+  file: ./build/mueller-ebook.*
+  skip_cleanup: true
+  on:
+    tags: true
