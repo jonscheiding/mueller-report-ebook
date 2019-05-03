@@ -23,7 +23,9 @@ const content = config.volumes.map(
 
     let volumeContent = allPages
       .slice(v.startPage - 1, v.endPage - 1)
-      .map(page => $('<div></div>').append(page.markup))
+      .map(page => $('<div></div>')
+        .attr('id', `g-page-${page.url}`)
+        .append(page.markup))
 
     volumeContent = pipeline.processItems(volumeContent)
 
