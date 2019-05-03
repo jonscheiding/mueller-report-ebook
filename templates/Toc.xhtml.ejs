@@ -11,9 +11,11 @@
   <h2><%= author %></h2>
   <h3><%= publisher %></h3>
   <nav id="toc" epub:type="toc">
-    <% content[0].volumes.forEach(function(volume, index){ %>
-      <h4><a href="<%= content[0].href %>#g-page-<%= volume.startPage %>"><%= volume.title %></a></h4>
-    <% }) %>
+    <ol>
+      <% content[0].volumes.forEach(function(volume, index){ %>
+        <li><a href="<%= content[0].href %>#g-page-<%= volume.startPage %>"><%= volume.title %></a></li>
+      <% }) %>
+  </ol>
   </nav>
 </body>
 </html>
