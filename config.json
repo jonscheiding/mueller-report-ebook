@@ -6,6 +6,10 @@
   },
   "volumes": [
     { "title": "Vol. I: Russian Interference in the 2016 Election", "startPage": 1, "endPage": 207 },
-    { "title": "Vol. II: Obstruction of Justice Inquiry", "startPage": 208, "endPage": 394 }
+    { "title": "Vol. II: Obstruction of Justice Inquiry", "startPage": 208, "endPage": 394 },
+    { "title": "Appendix A", "startPage": 394, "endPage": 397 },
+    { "title": "Appendix B", "startPage": 399, "endPage": 414 },
+    { "title": "Appendix C", "startPage": 415, "endPage": 442 },
+    { "title": "Appendix D", "startPage": 443, "endPage": 448 }
   ]
 }
