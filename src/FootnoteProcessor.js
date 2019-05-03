@@ -33,7 +33,6 @@ export class FootnoteProcessor extends Processor {
 
       if (!this.allFootnotes[number]) {
         console.warn(`Could not find content for footnote ${number}`)
-        console.log($(footnoteReferenceElement).parent().html())
         continue
       }
 
@@ -82,6 +81,4 @@ export class FootnoteProcessor extends Processor {
 
     return { id, number, element }
   }
-
-  // _extractFootnotesFromContent()
 }
