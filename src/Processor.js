@@ -1,5 +1,5 @@
 export class Processor {
-  _process (item, cb) { return item }
+  _process (item, cb) { cb(item) }
   _start (cb) { }
   _end (cb) { }
 

@@ -7,6 +7,7 @@ import config from '../config.json'
 import { ProcessorPipeline } from './Processor'
 import { FootnoteProcessor } from './FootnoteProcessor'
 import { MidParagraphPageBreakProcessor } from './MidParagraphPageBreakProcessor'
+import { SectionBreakProcessor } from './SectionBreakProcessor.js'
 
 const programArgs = yargs
   .option('output', { type: 'string', demandOption: true })
@@ -22,11 +23,13 @@ for (const v of config.volumes) {
 
   const pipeline = new ProcessorPipeline(
     new FootnoteProcessor(),
-    new MidParagraphPageBreakProcessor())
+    new MidParagraphPageBreakProcessor(),
+    new SectionBreakProcessor(v.sectionStartPages))
 
   let volumeContent = allPages
     .slice(v.startPage - 1, v.endPage - 1)
     .map(page => $('<div></div>')
+      .attr('data-page', page.url.toString())
       .attr('id', `g-page-${page.url}`)
       .append(page.markup))
 
