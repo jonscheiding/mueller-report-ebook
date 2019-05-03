@@ -15,7 +15,7 @@
     "build:unzip": "rimraf build/mueller-ebook && unzip -o -d build/mueller-ebook build/mueller-ebook.epub",
     "start": "run-p start:watch start:server",
     "start:server": "serve -s build/mueller-ebook/OEBPS",
-    "start:watch": "nodemon --exec yarn run start:html",
+    "start:watch": "nodemon --ignore build/ -e js,ejs,css,json --exec yarn run start:html",
     "start:html": "run-s build:epub build:unzip",
     "push": "tools/push-to-kindle build/mueller-ebook.mobi"
   },

@@ -38,10 +38,13 @@ const epubConfig = {
   content: [{
     title: 'report',
     data: $.html(data),
-    excludeFromToc: true
+    excludeFromToc: true,
+    volumes: config.volumes
   }],
   appendChapterTitles: false,
-  css: fs.readFileSync('./style.css')
+  css: fs.readFileSync('./style.css'),
+  customHtmlTocTemplatePath: './templates/Toc.xhtml.ejs',
+  customNcxTocTemplatePath: './templates/Toc.ncx.ejs'
 }
 
 // eslint-disable-next-line no-new
