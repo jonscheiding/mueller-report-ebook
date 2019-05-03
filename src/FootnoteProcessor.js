@@ -2,7 +2,6 @@ import $ from 'cheerio'
 import shortid from 'shortid'
 
 import { Processor } from './Processor'
-import { of } from 'rxjs'
 
 export class FootnoteProcessor extends Processor {
   constructor () {
@@ -19,8 +18,15 @@ export class FootnoteProcessor extends Processor {
 
   _end (cb) {
     const footnotesContainer = $('<div></div>')
-      .append(Object.values(this.allFootnotes)
-        .map(f => f.element))
+
+    for (const footnote of Object.values(this.allFootnotes)) {
+      if (!footnote.hasReference) {
+        console.warn(`Footnote ${footnote.number} has no references.`)
+        continue
+      }
+
+      footnotesContainer.append(footnote.element)
+    }
 
     cb(footnotesContainer)
   }
@@ -38,6 +44,7 @@ export class FootnoteProcessor extends Processor {
       }
 
       const id = this.allFootnotes[number].id
+      this.allFootnotes[number].hasReference = true
 
       const footnoteLink = $('<a />')
         .attr('id', `${id}-source`)

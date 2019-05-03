@@ -17,6 +17,8 @@ const allPages = JSON.parse(fs.readFileSync(programArgs.source))
 
 const content = config.volumes.map(
   v => {
+    console.log(`Processing ${v.title}.`)
+
     const pipeline = new ProcessorPipeline(
       new FootnoteProcessor(),
       new MidParagraphPageBreakProcessor())
