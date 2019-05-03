@@ -1,25 +1,7 @@
 import $ from 'cheerio'
 import shortid from 'shortid'
 
-class Processor {
-  _process (item, cb) { return item }
-  _start (cb) { }
-  _end (cb) { }
-
-  processItems (items) {
-    const results = []
-
-    const cb = result => results.push(result)
-
-    this._start(cb)
-    for (const item of items) {
-      this._process(item, cb)
-    }
-    this._end(cb)
-
-    return results
-  }
-}
+import { Processor } from './Processor'
 
 export class FootnoteProcessor extends Processor {
   constructor () {

@@ -4,7 +4,9 @@ import EPub from 'epub-gen'
 import $ from 'cheerio'
 
 import config from '../config.json'
-import { FootnoteProcessor } from './FootnoteProcessor.js'
+import { ProcessorPipeline } from './Processor'
+import { FootnoteProcessor } from './FootnoteProcessor'
+import { MidParagraphPageBreakProcessor } from './MidParagraphPageBreakProcessor'
 
 const programArgs = yargs
   .option('output', { type: 'string', demandOption: true })
@@ -15,12 +17,15 @@ const allPages = JSON.parse(fs.readFileSync(programArgs.source))
 
 const content = config.volumes.map(
   v => {
-    const footnoteProcessor = new FootnoteProcessor()
+    const pipeline = new ProcessorPipeline(
+      new FootnoteProcessor(),
+      new MidParagraphPageBreakProcessor())
+
     let volumeContent = allPages
       .slice(v.startPage - 1, v.endPage - 1)
       .map(page => $('<div></div>').append(page.markup))
 
-    volumeContent = footnoteProcessor.processItems(volumeContent)
+    volumeContent = pipeline.processItems(volumeContent)
 
     return {
       title: v.title,
