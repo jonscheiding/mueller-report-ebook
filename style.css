@@ -1,0 +1,40 @@
+span.g-redacted {
+  color: #000;
+  background-color: #000;
+  padding: 1px;
+  word-break: break-word;
+  cursor: default;
+  opacity: 1;
+}
+
+span.g-redacted:before {
+  top: 0;
+  width: 100%;
+  min-width: 150px;
+  opacity: 1;
+  padding-left: 5px;
+  font: 500 11px/calc(23 / 12) nyt-franklin,arial,helvetica,sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.g-redacted-white:before {
+  content: "Redacted: Ongoing Matter";
+  color: #FFF;
+}
+
+.g-redacted-green:before, .key-color-4:before {
+  content: "Redacted: Personal Privacy";
+  color: #6AB46A;
+}
+
+.g-redacted-yellow:before, .key-color-1:before {
+  content: "Redacted: Investigative Technique";
+  color: #F5C346;
+}
+
+span.g-redacted.g-redacted-black:before, span.g-redacted:not(.g-c-40):before {
+  content: "Redacted";
+}

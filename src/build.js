@@ -36,7 +36,8 @@ const content = config.volumes.map(
 
 const epubConfig = {
   ...config.metadata,
-  content: content
+  content: content,
+  css: fs.readFileSync('./style.css')
 }
 
 // eslint-disable-next-line no-new
