@@ -2,6 +2,14 @@
   page-break-before: always;
 }
 
+.title {
+  text-align: center;
+}
+
+.page.title {
+  padding-top: 2rem;
+}
+
 span.g-redacted {
   color: #000;
   background-color: #000;
