@@ -15,32 +15,32 @@ const programArgs = yargs
 
 const allPages = JSON.parse(fs.readFileSync(programArgs.source))
 
-const content = config.volumes.map(
-  v => {
-    console.log(`Processing ${v.title}.`)
+const data = $('<div></div>')
 
-    const pipeline = new ProcessorPipeline(
-      new FootnoteProcessor(),
-      new MidParagraphPageBreakProcessor())
+for (const v of config.volumes) {
+  console.log(`Processing ${v.title}.`)
 
-    let volumeContent = allPages
-      .slice(v.startPage - 1, v.endPage - 1)
-      .map(page => $('<div></div>')
-        .attr('id', `g-page-${page.url}`)
-        .append(page.markup))
+  const pipeline = new ProcessorPipeline(
+    new FootnoteProcessor(),
+    new MidParagraphPageBreakProcessor())
 
-    volumeContent = pipeline.processItems(volumeContent)
+  let volumeContent = allPages
+    .slice(v.startPage - 1, v.endPage - 1)
+    .map(page => $('<div></div>')
+      .attr('id', `g-page-${page.url}`)
+      .append(page.markup))
 
-    return {
-      title: v.title,
-      data: volumeContent.map(c => $.html(c)).join('')
-    }
-  }
-)
+  data.append(pipeline.processItems(volumeContent))
+}
 
 const epubConfig = {
   ...config.metadata,
-  content: content,
+  content: [{
+    title: 'report',
+    data: $.html(data),
+    excludeFromToc: true
+  }],
+  appendChapterTitles: false,
   css: fs.readFileSync('./style.css')
 }
 
