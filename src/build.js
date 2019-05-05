@@ -15,6 +15,25 @@ const programArgs = yargs
   .option('source', { type: 'string', demandOption: true })
   .argv
 
+function createPageElement (volume, page) {
+  const pageNumber = parseInt(page.url)
+  const isTocPage = volume.tocStartPage &&
+    volume.tocStartPage <= pageNumber && volume.tocEndPage >= pageNumber
+
+  const element = $('<div></div>')
+    .attr('data-page', page.url.toString())
+    .attr('id', `g-page-${page.url}`)
+    .addClass('page')
+
+  if (isTocPage) {
+    element.addClass('toc')
+  }
+
+  element.append(page.markup)
+
+  return element
+}
+
 const allPages = JSON.parse(fs.readFileSync(programArgs.source))
 
 const data = $('<div></div>')
@@ -30,11 +49,7 @@ for (const v of config.volumes) {
 
   let volumeContent = allPages
     .slice(v.startPage - 1, v.endPage)
-    .map(page => $('<div></div>')
-      .attr('data-page', page.url.toString())
-      .attr('id', `g-page-${page.url}`)
-      .addClass('page')
-      .append(page.markup))
+    .map(page => createPageElement(v, page))
 
   data.append(pipeline.processItems(volumeContent))
 }

@@ -7,26 +7,34 @@
   "volumes": [
     { 
       "title": "Vol. I: Russian Interference in the 2016 Election", 
-      "startPage": 1, "endPage": 207, "sectionStartPages": [ 3, 9, 12, 19 ]
+      "startPage": 1, "endPage": 207, 
+      "tocStartPage": 3, "tocEndPage": 8,
+      "sectionStartPages": [ 3, 9, 12, 19 ]
     },
     { 
       "title": "Vol. II: Obstruction of Justice Inquiry", 
-      "startPage": 208, "endPage": 394, "sectionStartPages": [ 209, 213, 215, 221 ] },
+      "startPage": 208, "endPage": 394, 
+      "tocStartPage": 209, "tocEndPage": 212,
+      "sectionStartPages": [ 209, 213, 215, 221 ] },
     { 
       "title": "Appendix A", 
-      "startPage": 395, "endPage": 398, "sectionStartPages": [ 396 ]
+      "startPage": 395, "endPage": 398, 
+      "sectionStartPages": [ 396 ]
     },
     { 
       "title": "Appendix B", 
-      "startPage": 399, "endPage": 414, "sectionStartPages": [ 400 ]
+      "startPage": 399, "endPage": 414, 
+      "sectionStartPages": [ 400 ]
     },
     { 
       "title": "Appendix C", 
-      "startPage": 415, "endPage": 442, "sectionStartPages": [ 416 ]
+      "startPage": 415, "endPage": 442, 
+      "sectionStartPages": [ 416 ]
     },
     { 
       "title": "Appendix D", 
-      "startPage": 443, "endPage": 448, "sectionStartPages": [ 443 ]
+      "startPage": 443, "endPage": 448, 
+      "sectionStartPages": [ 443 ]
     }
   ]
 }
