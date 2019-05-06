@@ -10,6 +10,7 @@ import { FootnoteProcessor } from './processors/FootnoteProcessor'
 import { MidParagraphPageBreakProcessor } from './processors/MidParagraphPageBreakProcessor'
 import { SectionBreakProcessor } from './processors/SectionBreakProcessor.js'
 import { TitlePageProcessor } from './processors/TitlePageProcessor.js'
+import { TocBuilderProcessor } from './processors/TocBuilderProcessor'
 
 const programArgs = yargs
   .option('output', { type: 'string', demandOption: true })
@@ -49,7 +50,8 @@ for (const v of config.volumes) {
     new FootnoteProcessor(),
     new AnnotationProcessor(annotations),
     new MidParagraphPageBreakProcessor(),
-    new SectionBreakProcessor(v.sectionStartPages))
+    new SectionBreakProcessor(v.sectionStartPages),
+    new TocBuilderProcessor())
 
   let volumeContent = pages
     .slice(v.startPage - 1, v.endPage)
