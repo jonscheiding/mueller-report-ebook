@@ -4,12 +4,12 @@ import EPub from 'epub-gen'
 import $ from 'cheerio'
 
 import config from '../config.json'
-import { ProcessorPipeline } from './Processor'
-import { FootnoteProcessor } from './FootnoteProcessor'
-import { MidParagraphPageBreakProcessor } from './MidParagraphPageBreakProcessor'
-import { SectionBreakProcessor } from './SectionBreakProcessor.js'
-import { TitlePageProcessor } from './TitlePageProcessor.js'
-import { AnnotationProcessor } from './AnnotationProcessor.js'
+import { ProcessorPipeline } from './processors/Processor'
+import { AnnotationProcessor } from './processors/AnnotationProcessor.js'
+import { FootnoteProcessor } from './processors/FootnoteProcessor'
+import { MidParagraphPageBreakProcessor } from './processors/MidParagraphPageBreakProcessor'
+import { SectionBreakProcessor } from './processors/SectionBreakProcessor.js'
+import { TitlePageProcessor } from './processors/TitlePageProcessor.js'
 
 const programArgs = yargs
   .option('output', { type: 'string', demandOption: true })
