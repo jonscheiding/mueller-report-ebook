@@ -1,6 +1,6 @@
 # Mueller Report e-book generator
 
-This repository implements a tool that can be used to generate a usable e-book version of the 2019 "Report On The Investigation Into Russian Interference In The 2016 Presidential Election".  The book is generated in MOBI format for Kindles, and EPUB for other e-readers.
+This repository generates a usable e-book version of the 2019 "Report On The Investigation Into Russian Interference In The 2016 Presidential Election".  The book is generated in MOBI format for Kindles, and EPUB for other e-readers.
 
 I created this because I think every American should read this report, and I wanted to do my part to make that as easy as possible.
 
