@@ -2,10 +2,12 @@ import fs from 'fs'
 import yargs from 'yargs'
 import EPub from 'epub-gen'
 import $ from 'cheerio'
+import pretty from 'pretty'
 
 import config from '../config.json'
 import { ProcessorPipeline } from './processors/Processor'
 import { AnnotationProcessor } from './processors/AnnotationProcessor.js'
+import { CleanupHtmlProcessor } from './processors/CleanupHtmlProcessor.js'
 import { FootnoteProcessor } from './processors/FootnoteProcessor'
 import { MidParagraphPageBreakProcessor } from './processors/MidParagraphPageBreakProcessor'
 import { SectionBreakProcessor } from './processors/SectionBreakProcessor.js'
@@ -51,7 +53,9 @@ for (const v of config.volumes) {
     new AnnotationProcessor(annotations),
     new MidParagraphPageBreakProcessor(),
     new SectionBreakProcessor(v.sectionStartPages),
-    new TocBuilderProcessor())
+    new TocBuilderProcessor(),
+    new CleanupHtmlProcessor()
+  )
 
   let volumeContent = pages
     .slice(v.startPage - 1, v.endPage)
@@ -64,8 +68,7 @@ const epubConfig = {
   ...config.metadata,
   content: [{
     title: 'report',
-    data: $.html(data),
-    excludeFromToc: true,
+    data: pretty($.html(data)),
     volumes: config.volumes
   }],
   css: fs.readFileSync('./style.css'),

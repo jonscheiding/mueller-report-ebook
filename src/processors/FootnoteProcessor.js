@@ -21,7 +21,7 @@ export class FootnoteProcessor extends Processor {
       .addClass('footnotes')
 
     for (const footnote of Object.values(this.allFootnotes)) {
-      if (!footnote.hasReference) {
+      if (footnote.references === 0) {
         console.warn(`Footnote ${footnote.number} has no references.`)
         continue
       }
@@ -39,20 +39,27 @@ export class FootnoteProcessor extends Processor {
 
     for (const footnoteReferenceElement of footnoteReferenceElements) {
       const number = $(footnoteReferenceElement).text()
+      const footnote = this.allFootnotes[number]
 
-      if (!this.allFootnotes[number]) {
+      if (!footnote) {
         console.warn(`Could not find content for footnote ${number}.`)
         continue
       }
 
-      const id = this.allFootnotes[number].id
-      this.allFootnotes[number].hasReference = true
+      let id = footnote.id
+      footnote.references++
 
-      const footnoteLink = $('<a />')
-        .attr('id', `${id}-source`)
-        .attr('href', `#${id}-target`)
-        .attr('epub:type', 'noteref')
-        .addClass('footnote-ref')
+      if (footnote.references > 1) {
+        $(footnote.element).prepend(
+          this._createFootnoteLink(footnote, true)
+        )
+
+        id = `${id}-${footnote.references}`
+
+        console.log('duplicate footnote ' + number + ' on ' + $(footnoteReferenceElement).parent().text())
+      }
+
+      const footnoteLink = this._createFootnoteLink(footnote)
 
       $(footnoteReferenceElement).wrap(footnoteLink)
     }
@@ -79,29 +86,25 @@ export class FootnoteProcessor extends Processor {
 
   _processFootnoteElement (footnoteElement) {
     const id = shortid()
-    const footnoteNumber = $(footnoteElement).find('sup').first()
-    const number = footnoteNumber.text()
+    const numberElement = $(footnoteElement).find('sup').first()
+    const number = numberElement.text()
 
     if (!number) {
       this._attachFootnoteElementToPreviousFootnote(footnoteElement)
       return null
     }
 
-    const footnoteBackLink = $('<a />')
-      .attr('href', `#${id}-source`)
-      .attr('epub:type', 'noteref')
-
-    footnoteNumber.wrap(footnoteBackLink)
-
     const element = $('<aside />')
-      .attr('id', `${id}-target`)
       .attr('epub:type', 'footnote')
       .addClass('footnote')
       .append($(footnoteElement).contents())
 
+    const footnote = { id, number, element, references: 0 }
+
+    numberElement.wrap(this._createFootnoteLink(footnote, true))
     $(footnoteElement).remove()
 
-    return { id, number, element }
+    return footnote
   }
 
   _attachFootnoteElementToPreviousFootnote (footnoteElement) {
@@ -110,5 +113,27 @@ export class FootnoteProcessor extends Processor {
       ' ', $(footnoteElement).contents())
 
     $(footnoteElement).remove()
+  }
+
+  _createFootnoteLink (footnote, isBackLink = false) {
+    let baseId = footnote.id
+    const isPrimary = footnote.references <= 1
+
+    if (!isPrimary) {
+      baseId += `-${footnote.references}`
+    }
+
+    let id = `${baseId}-source`
+    let href = `${baseId}-target`
+    if (isBackLink) {
+      [ id, href ] = [ href, id ]
+    }
+
+    const link = $('<a />')
+      .attr('href', '#' + href)
+      .attr('epub:type', 'noteref')
+      .attr('id', id)
+
+    return link
   }
 }
