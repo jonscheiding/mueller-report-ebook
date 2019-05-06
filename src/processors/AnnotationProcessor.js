@@ -45,6 +45,10 @@ export class AnnotationProcessor extends Processor {
   }
 
   _end (cb) {
+    if (this.annotationsUsed.length === 0) {
+      return
+    }
+
     const annotationsEl = $('<div />')
       .addClass('annotations')
 

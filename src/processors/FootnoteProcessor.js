@@ -17,10 +17,15 @@ export class FootnoteProcessor extends Processor {
   }
 
   _end (cb) {
+    const footnotes = Object.values(this.allFootnotes)
+    if (footnotes.length === 0) {
+      return
+    }
+
     const footnotesContainer = $('<div />')
       .addClass('footnotes')
 
-    for (const footnote of Object.values(this.allFootnotes)) {
+    for (const footnote of footnotes) {
       if (!footnote.hasReference) {
         console.warn(`Footnote ${footnote.number} has no references.`)
         continue
