@@ -8,7 +8,7 @@ This would not have been possible without the hard work of the New York Times tr
 
 ## Installation
 
-To download the generated results, check out the [latest release](https://github.com/jonscheiding/mueller-report-ebook-generator/releases/latest).
+To download the final e-book, go to the [latest release](https://github.com/jonscheiding/mueller-report-ebook-generator/releases/latest) page.
 
 ### Installation for Kindle
 
