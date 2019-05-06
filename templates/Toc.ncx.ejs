@@ -1,26 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
-    <head>
-        <meta name="dtb:uid" content="<%= id %>" />
-        <meta name="dtb:generator" content="epub-gen"/>
-        <meta name="dtb:depth" content="1"/>
-        <meta name="dtb:totalPageCount" content="0"/>
-        <meta name="dtb:maxPageNumber" content="0"/>
-    </head>
-    <docTitle>
-        <text><%= title %></text>
-    </docTitle>
-    <docAuthor>
-        <text><%= author %></text>
-    </docAuthor>
-    <navMap>
-        <% content[0].volumes.forEach(function(volume, index){ %>
-          <navPoint id="content_<%= index %>" playOrder="<%= index %>" class="chapter">
-              <navLabel>
-                  <text><%= volume.title %></text>
-              </navLabel>
-              <content src="<%= content[0].href %>#g-page-<%= volume.startPage %>"/>
+  <head>
+    <meta name="dtb:uid" content="<%= id %>" />
+    <meta name="dtb:generator" content="epub-gen"/>
+    <meta name="dtb:depth" content="1"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text><%= title %></text>
+  </docTitle>
+  <docAuthor>
+    <text><%= author %></text>
+  </docAuthor>
+  <navMap>
+    <% var _index = 0; %>
+    <% content.forEach(function(content, index){ %>
+      <% if(!content.excludeFromToc && content.beforeToc){ %>
+        <navPoint id="content_<%= index %>_<%= content.id %>" playOrder="<%= _index++ %>" class="chapter">
+          <navLabel>
+            <text><%= (1+index) + ". " + (content.title || "Chapter " + (1+index))%></text>
+          </navLabel>
+          <content src="<%= content.href %>"/>
+        </navPoint>
+      <% } %>
+    <% }) %>
+          
+    <navPoint id="toc" playOrder="<%= _index++ %>" class="chapter">
+      <navLabel>
+        <text><%= tocTitle %></text>
+      </navLabel>
+      <content src="toc.xhtml"/>
+    </navPoint>
+    
+    <% content.forEach(function(c, index){ %>
+      <% c.volumes.forEach(function(v, index2) { %>
+        <% if(!c.excludeFromToc && !c.beforeToc){ %>
+          <navPoint id="content_<%= index %>_<%= c.id %>_<%= index2 %>" playOrder="<%= _index++ %>" class="chapter">
+            <navLabel>
+              <text><%= v.title %></text>
+            </navLabel>
+            <content src="<%= c.href %>#g-page-<%= v.startPage %>"/>
           </navPoint>
-        <% }) %>
-    </navMap>
+        <% } %>
+      <% }) %>
+    <% }) %>
+  </navMap>
 </ncx>
