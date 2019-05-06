@@ -17,7 +17,8 @@ export class FootnoteProcessor extends Processor {
   }
 
   _end (cb) {
-    const footnotesContainer = $('<div></div>')
+    const footnotesContainer = $('<div />')
+      .addClass('footnotes')
 
     for (const footnote of Object.values(this.allFootnotes)) {
       if (!footnote.hasReference) {
@@ -51,6 +52,7 @@ export class FootnoteProcessor extends Processor {
         .attr('id', `${id}-source`)
         .attr('href', `#${id}-target`)
         .attr('epub:type', 'noteref')
+        .addClass('footnote-ref')
 
       $(footnoteReferenceElement).wrap(footnoteLink)
     }
@@ -94,6 +96,7 @@ export class FootnoteProcessor extends Processor {
     const element = $('<aside />')
       .attr('id', `${id}-target`)
       .attr('epub:type', 'footnote')
+      .addClass('footnote')
       .append($(footnoteElement).contents())
 
     $(footnoteElement).remove()

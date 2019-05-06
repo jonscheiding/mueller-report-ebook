@@ -2,6 +2,51 @@
   page-break-before: always;
 }
 
+.footnotes::before {
+  content: 'FOOTNOTES';
+}
+
+.annotations::before {
+  content: 'ANNOTATIONS';
+}
+
+.footnotes::before, .annotations::before {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 1.5rem;
+  display: block;
+}
+
+.footnote, .annotation {
+  margin-top: 0.5rem;
+}
+
+.footnote::before, .annotation::before {
+  content: '';
+  display: block;
+  width: 30%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  max-width: 90px;
+  border-top: 1px solid #000;
+}
+
+.annotation a:first-child {
+  float: left;
+  margin-right: 0.5rem;
+}
+
+.annotation i {
+  display: block;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+a.annotation-ref {
+  text-decoration: none;
+  color: initial;
+}
+
 .title {
   text-align: center;
 }
@@ -10,7 +55,7 @@
   padding-top: 2rem;
 }
 
-span.g-redacted {
+.g-redacted {
   color: #000;
   background-color: #000;
   padding: 1px;
@@ -19,7 +64,7 @@ span.g-redacted {
   opacity: 1;
 }
 
-span.g-redacted:before {
+.g-redacted:before {
   top: 0;
   width: 100%;
   min-width: 150px;
@@ -49,4 +94,8 @@ span.g-redacted:before {
 
 span.g-redacted.g-redacted-black:before, span.g-redacted:not(.g-c-40):before {
   content: "Redacted";
+}
+
+.g-toc-indent {
+  padding-left: 1rem;
 }

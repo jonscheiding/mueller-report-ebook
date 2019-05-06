@@ -33,6 +33,7 @@ export class AnnotationProcessor extends Processor {
         .attr('id', `${annotation.id}-source`)
         .attr('href', `#${annotation.id}-target`)
         .attr('epub:type', 'noteref')
+        .addClass('annotation-ref')
 
       const refContent = $(ref).prev('strong')
 
@@ -45,17 +46,19 @@ export class AnnotationProcessor extends Processor {
 
   _end (cb) {
     const annotationsEl = $('<div />')
+      .addClass('annotations')
 
     for (const annotation of this.annotationsUsed) {
       const annotationEl = $('<aside />')
         .attr('id', `${annotation.id}-target`)
         .attr('epub:type', 'footnote')
+        .addClass('annotation')
 
       annotationEl.append($('<a />')
         .attr('href', `#${annotation.id}-source`)
         .attr('epub:type', 'noteref')
         .text('↪'))
-      annotationEl.append(' ')
+      annotationEl.append($('<i />').text('New York Times commentary:'))
       annotationEl.append(annotation.markup)
 
       annotationsEl.append(annotationEl)
