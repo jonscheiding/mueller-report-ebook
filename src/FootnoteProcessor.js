@@ -32,9 +32,10 @@ export class FootnoteProcessor extends Processor {
   }
 
   _processFootnoteReferencesInContent (content) {
-    content.find('.g-doc-annotation_index').remove()
+    const footnoteReferenceElements = content
+      .find(':not(aside) sup:not(.g-doc-annotation_index)')
+      .toArray()
 
-    const footnoteReferenceElements = content.find(':not(aside) sup').toArray()
     for (const footnoteReferenceElement of footnoteReferenceElements) {
       const number = $(footnoteReferenceElement).text()
 

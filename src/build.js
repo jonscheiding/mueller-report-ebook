@@ -9,10 +9,12 @@ import { FootnoteProcessor } from './FootnoteProcessor'
 import { MidParagraphPageBreakProcessor } from './MidParagraphPageBreakProcessor'
 import { SectionBreakProcessor } from './SectionBreakProcessor.js'
 import { TitlePageProcessor } from './TitlePageProcessor.js'
+import { AnnotationProcessor } from './AnnotationProcessor.js'
 
 const programArgs = yargs
   .option('output', { type: 'string', demandOption: true })
-  .option('source', { type: 'string', demandOption: true })
+  .option('pages', { type: 'string', demandOption: true })
+  .option('annotations', { type: 'string', demandOption: true })
   .argv
 
 function createPageElement (volume, page) {
@@ -34,7 +36,8 @@ function createPageElement (volume, page) {
   return element
 }
 
-const allPages = JSON.parse(fs.readFileSync(programArgs.source))
+const pages = JSON.parse(fs.readFileSync(programArgs.pages))
+const annotations = JSON.parse(fs.readFileSync(programArgs.annotations))
 
 const data = $('<div></div>')
 
@@ -44,10 +47,11 @@ for (const v of config.volumes) {
   const pipeline = new ProcessorPipeline(
     new TitlePageProcessor(),
     new FootnoteProcessor(),
+    new AnnotationProcessor(annotations),
     new MidParagraphPageBreakProcessor(),
     new SectionBreakProcessor(v.sectionStartPages))
 
-  let volumeContent = allPages
+  let volumeContent = pages
     .slice(v.startPage - 1, v.endPage)
     .map(page => createPageElement(v, page))
 
