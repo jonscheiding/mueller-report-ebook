@@ -6,18 +6,31 @@
   <meta charset="UTF-8" />
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-<body class="toc">
-  <div class="title">
-    <h1><%= title %></h1>
-    <h2><%= author %></h2>
-    <h3><%= publisher %></h3>
-  </div>
-  <nav id="toc" epub:type="toc">
-    <ol>
-      <% content[0].volumes.forEach(function(volume, index){ %>
-        <li><a href="<%= content[0].href %>#g-page-<%= volume.startPage %>"><%= volume.title %></a></li>
+<body>
+<h1 class="h1"><%= tocTitle %></h1>
+<nav id="toc" epub:type="toc">
+  <ol>
+    <% content.forEach(function(content, index){ %>
+      <% if(!content.excludeFromToc && content.beforeToc){ %>
+          <li class="table-of-content">
+              <a href="<%= content.href %>"><%= (content.title || "Chapter "+ (1+index)) %><% if(content.author.length){ %> - <small class="toc-author"><%= content.author.join(",") %></small><% }%><% if(content.url){ %><span class="toc-link"><%= content.url %></span><% }%></a>
+          </li>
+      <% } %>
+    <% }) %>
+    <li class="table-of-content">
+      <a href="toc.xhtml">- <%= tocTitle %> -</a>
+    </li>
+    <% content.forEach(function(c, index){ %>
+      <% c.volumes.forEach(function(v, index2){ %>
+        <% if(!c.excludeFromToc && !c.beforeToc){ %>
+          <li class="table-of-content">
+            <a href="<%= c.href %>#g-page-<%= v.startPage %>"><%= v.title %></a>
+          </li>
+        <% } %>
       <% }) %>
+    <% }) %>
   </ol>
-  </nav>
+</nav>
+
 </body>
 </html>

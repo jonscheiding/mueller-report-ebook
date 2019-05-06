@@ -65,7 +65,6 @@ const epubConfig = {
   content: [{
     title: 'report',
     data: $.html(data),
-    excludeFromToc: true,
     volumes: config.volumes
   }],
   css: fs.readFileSync('./style.css'),
