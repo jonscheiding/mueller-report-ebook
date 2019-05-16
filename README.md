@@ -1,30 +1,30 @@
-# Mueller Report e-book generator
+# Mueller Report E-Book
 
 This repository generates a usable e-book version of the 2019 "Report On The Investigation Into Russian Interference In The 2016 Presidential Election".  The book is generated in MOBI format for Kindles, and EPUB for other e-readers.
 
 I created this because I think every American should read this report, and I wanted to do my part to make that as easy as possible.
 
-## Acknowledgement
+### Acknowledgement
 
 This would not have been possible without the hard work of the New York Times transcribing the report.  Their version can be found [here](https://www.nytimes.com/interactive/2019/04/18/us/politics/mueller-report-document.html), and includes a lot of helpful annotations as well as an "Explore By Person" index.
 
 In respect for the work they put in, I've included their annotations in the generated e-book.
 
-## Download
+## Downloading and Installing
 
-To download the final e-book, go to the [latest release](https://github.com/jonscheiding/mueller-report-ebook/releases/latest) page.
+There are two formats of the book.
 
-### Download for Kindle
+- The Amazon Kindle uses the **Mobi** e-book format.  You can get a Kindle-friendly version of the book with the *Download .mobi* link above.
+- Most other E-Readers use the **EPUB** e-book format.  For these, you can download the book using the *Download .epub* link above.
 
-1. Download `mueller-ebook.mobi` from the [latest release](https://github.com/jonscheiding/mueller-report-ebook/releases/latest) page.
-2. Plug your Kindle in to your computer.  It should show up as an external drive.
-3. Copy `mueller-ebook.mobi` into the `documents` folder on your Kindle drive.
+Here is a site that provides some good rundowns of the various ways to get the downloaded e-book onto your device: [How to Place an eBook on your Device](https://voraciousreadersonly.com/how-to-place-an-ebook-on-your-device/)
 
-### Download for iOS
+## Alternatives
 
-1. If you've removed the "Books" app from your iOS device, [reinstall it](https://itunes.apple.com/us/app/apple-books/id364709193).
-2. On your iOS device, browse to the [latest release](https://github.com/jonscheiding/mueller-report-ebook/releases/latest) page.
-3. Expand the "Assets" section.
-4. Click on `mueller-ebook.epub`.  You should be prompted to open in "Books".  If you aren't, click "More..." and choose "Copy to Books" from the Share menu.
+Since I started this project, someone else has published a similar e-book version [for Kindles](https://amazon.com/dp/B07R11FH4H).  Theirs is probably better (plus there's an audiobook!), but mine was first. 😏
 
-_Feel free to contribute download instructions for other devices and e-readers._
+Barnes & Nobile released a free EPUB version, but it's basically just the original scanned PDF, and really hard to read on a small screen.
+
+## Contributing
+
+Feel free to contribute more detailed instructions, or other enhancements, by opening a pull request!
