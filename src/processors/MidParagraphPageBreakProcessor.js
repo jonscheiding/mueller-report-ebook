@@ -3,6 +3,10 @@ import { Processor } from './Processor'
 export class MidParagraphPageBreakProcessor extends Processor {
   _process (content, cb) {
     if (content.hasClass('toc')) {
+      if (this.previousContent) {
+        cb(this.previousContent)
+        this.previousContent = null
+      }
       cb(content)
       return
     }
