@@ -23,7 +23,9 @@ Here is a site that provides some good rundowns of the various ways to get the d
 
 Since I started this project, someone else has published a similar e-book version [for Kindles](https://amazon.com/dp/B07R11FH4H).  Theirs is probably better (plus there's an audiobook!), but mine was first. 😏
 
-Barnes & Nobile released a free EPUB version, but it's basically just the original scanned PDF, and really hard to read on a small screen.
+Barnes & Nobile released a free [EPUB version](https://www.barnesandnoble.com/w/the-mueller-report-us-department-of-justice/1131278152), but it's basically just the original scanned PDF, and really hard to read on a small screen.
+
+In May 2019, The Digital Public Library of America released a free [EPUB version](https://pro.dp.la/ebooks/mueller-report) with reflowable text and links to original documents referenced by the report.  Please consider making a donation to support their work bringing "the riches held within America’s libraries, archives, museums, and other cultural heritage institutions" to the digital world.
 
 ## Contributing
 
